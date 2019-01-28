@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="movie_poster_menu_setting_sort_by_popularity">Sort by Popularity</string>
+    <string name="movie_poster_menu_setting_sort_by_top_rated">Sort by Top rated</string>
+
+    <!-- Details page -->
+    <string name="movie_details_original_title_text">\nOriginal title:</string>
+    <string name="movie_details_plot_synopsis_text">\nPlot synopsis:</string>
+    <string name="movie_details_user_rating_text">\nUser rating:</string>
+    <string name="movie_details_release_date_text">\nRelease date:</string>
+    <string name="error_message">Oops! Something went wrong</string>
+    <string name="ok">OK</string>
+    <string name="movie_thumbnail_text">Movie thumbnail</string>
+
+</resources>
