@@ -20,16 +20,20 @@ import popularmovies.ankit.udacity.com.popularmovies.utils.NetworkUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String MOVIES_GRID_VIEW_POSITION = "MOVIES_GRID_VIEW_POSITION";
+    private static final String IS_MOST_POPULAR_LISTING_SHOWN = "IS_MOST_POPULAR_LISTING_SHOWN";
 
     private List<Movie> mMovieList = new ArrayList<>();
     private MoviePosterAdapter mMoviePosterAdapter;
     private ProgressBar mProgressBar;
     private GridView mGridView;
+    private int mGridViewPosition;
+    private boolean mIsMostPopularListingShown;
+    private String mCurrentMovieUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,13 @@ public class MainActivity extends AppCompatActivity {
                 launchMovieDetailsPage(mMovieList.get(i));
             }
         });
-        loadMoviePosters();
+        if (savedInstanceState == null) {
+            loadMoviePosters(true);
+        } else {
+            mGridViewPosition = savedInstanceState.getInt(MOVIES_GRID_VIEW_POSITION);
+            mIsMostPopularListingShown = savedInstanceState.getBoolean(IS_MOST_POPULAR_LISTING_SHOWN, true);
+            loadMoviePosters(savedInstanceState.getBoolean(IS_MOST_POPULAR_LISTING_SHOWN, true));
+        }
     }
 
     @Override
@@ -61,16 +71,24 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.movie_poster_sort_by_popularity:
-                Collections.sort(mMovieList, getMoviesSortedByPopularity());
-                mMoviePosterAdapter.setData(mMovieList);
+                mGridViewPosition = 0;
+                loadMoviePosters(true);
                 return true;
             case R.id.movie_poster_sort_by_top_rated:
-                Collections.sort(mMovieList, getMoviesSortedByRanking());
-                mMoviePosterAdapter.setData(mMovieList);
+                mGridViewPosition = 0;
+                loadMoviePosters(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        int index = mGridView != null ? mGridView.getFirstVisiblePosition() : 0;
+        outState.putInt(MOVIES_GRID_VIEW_POSITION, index);
+        outState.putBoolean(IS_MOST_POPULAR_LISTING_SHOWN, mIsMostPopularListingShown);
+        super.onSaveInstanceState(outState);
     }
 
     private void launchMovieDetailsPage(Movie movie) {
@@ -79,32 +97,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private Comparator<Movie> getMoviesSortedByPopularity() {
-        return new Comparator<Movie>() {
-            @Override
-            public int compare(Movie movie1, Movie movie2) {
-                if (movie1.getPopularity() > movie2.getPopularity()) {
-                    return -1;
-                }
-                return 1;
-            }
-        };
-    }
-
-    private Comparator<Movie> getMoviesSortedByRanking() {
-        return new Comparator<Movie>() {
-            @Override
-            public int compare(Movie movie1, Movie movie2) {
-                if (movie1.getRanking() > movie2.getRanking()) {
-                    return -1;
-                }
-                return 1;
-            }
-        };
-    }
-
-    private void loadMoviePosters() {
-        new FetchMoviePosterData().execute();
+    private void loadMoviePosters(boolean showPopularMovies) {
+        if (showPopularMovies && !NetworkUtil.POPULAR_MOVIES_URL.equalsIgnoreCase(mCurrentMovieUrl)) {
+            mCurrentMovieUrl = NetworkUtil.POPULAR_MOVIES_URL;
+            new FetchMoviePosterData().execute(mCurrentMovieUrl);
+        } else if (!showPopularMovies && !NetworkUtil.TOP_RATED_MOVIES_URL.equalsIgnoreCase(mCurrentMovieUrl)) {
+            mCurrentMovieUrl = NetworkUtil.TOP_RATED_MOVIES_URL;
+            new FetchMoviePosterData().execute(mCurrentMovieUrl);
+        }
+        mIsMostPopularListingShown = showPopularMovies;
     }
 
     private void updateVisibility(boolean loadingDone) {
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String response = "";
             try {
-                response = NetworkUtil.getMovieDetails();
+                response = NetworkUtil.getMoviesList(strings[0]);
             } catch (IOException e) {
                 showErrorDialog();
             }
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 mMoviePosterAdapter = new MoviePosterAdapter(MainActivity.this);
                 mMoviePosterAdapter.setData(mMovieList);
                 mGridView.setAdapter(mMoviePosterAdapter);
+                mGridView.smoothScrollToPosition(mGridViewPosition);
             } catch (JSONException e) {
                 showErrorDialog();
             }

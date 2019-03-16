@@ -13,7 +13,8 @@ public class NetworkUtil {
 
     //TODO: Set your personal API key here
     private static final String API_KEY = "";
-    private static final String MOVIE_LISTINGS_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
+    public static final String POPULAR_MOVIES_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
+    public static final String TOP_RATED_MOVIES_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + API_KEY;
     private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
     private static final String IMAGE_QUALITY_AVERAGE = "/w185";
     private static final String IMAGE_QUALITY_HIGH = "/w500";
@@ -26,8 +27,8 @@ public class NetworkUtil {
         return IMAGE_BASE_URL + IMAGE_QUALITY_HIGH;
     }
 
-    public static String getMovieDetails() throws IOException {
-        Uri builtUri = Uri.parse(MOVIE_LISTINGS_URL).buildUpon()
+    public static String getMoviesList(String moviesUrl) throws IOException {
+        Uri builtUri = Uri.parse(moviesUrl).buildUpon()
                 .build();
 
         URL url = null;
