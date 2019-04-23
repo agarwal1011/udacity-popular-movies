@@ -2,6 +2,7 @@
     <string name="app_name">Popular Movies</string>
     <string name="movie_poster_menu_setting_sort_by_popularity">Sort by Popularity</string>
     <string name="movie_poster_menu_setting_sort_by_top_rated">Sort by Top rated</string>
+    <string name="movie_poster_menu_setting_favorites">Favorites</string>
 
     <!-- Details page -->
     <string name="movie_details_original_title_text">\nOriginal title:</string>
@@ -11,5 +12,11 @@
     <string name="error_message">Oops! Something went wrong</string>
     <string name="ok">OK</string>
     <string name="movie_thumbnail_text">Movie thumbnail</string>
+    <string name="reviews_heading_text">Reviews</string>
+    <string name="movie_details_activity_title">Movie Details</string>
+    <string name="mark_as_favorite_button">Mark as\nfavorite</string>
+    <string name="trailers_heading_text">Trailers</string>
+    <string name="reviews_error_message">Unable to load reviews</string>
+    <string name="trailers_error_message">Unable to load trailer</string>
 
 </resources>

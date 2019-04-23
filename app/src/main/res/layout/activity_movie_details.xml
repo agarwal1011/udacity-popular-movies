@@ -1,73 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:scrollbars="vertical"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
 
-        <ImageView
-                android:id="@+id/movie_thumbnail_tv"
-                android:layout_gravity="center_horizontal"
+        <TextView
+                android:id="@+id/movie_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/movie_thumbnail_text"
-                android:adjustViewBounds="true"/>
+                style="@style/TextStyleHeading"
+                android:textColor="@android:color/white"
+                android:padding="@dimen/padding_16dp"
+                android:background="@color/colorAccent"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_16dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-            <TextView
+            <ImageView
+                    android:id="@+id/movie_thumbnail_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/movie_details_original_title_text"/>
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/movie_thumbnail_text"
+                    android:adjustViewBounds="true"/>
 
-            <TextView
-                    android:id="@+id/movie_original_title_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
+            <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/movie_details_plot_synopsis_text"/>
+                    android:padding="@dimen/padding_16dp"
+                    android:orientation="vertical">
 
-            <TextView
-                    android:id="@+id/movie_overview_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/movie_release_date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleYear"
+                        tools:text="2015"/>
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/movie_details_user_rating_text"/>
+                <TextView
+                        android:id="@+id/movie_user_rating_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_4dp"
+                        style="@style/TextStyleRating"
+                        tools:text="8.1/10"/>
 
-            <TextView
-                    android:id="@+id/movie_user_rating_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@string/movie_details_release_date_text"/>
-
-            <TextView
-                    android:id="@+id/movie_release_date_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
+                <Button
+                        android:id="@+id/mark_as_favorite_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ButtonStyleFavorite"
+                        android:layout_marginTop="@dimen/padding_8dp"
+                        android:background="@color/colorAccent"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="@string/mark_as_favorite_button"/>
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+                android:id="@+id/movie_overview_tv"
+                android:padding="@dimen/padding_16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:padding="@dimen/padding_16dp"
+                android:layout_height="1dp"
+                android:background="@color/divider"/>
+
+        <include layout="@layout/trailers_layout"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:padding="@dimen/padding_16dp"
+                android:layout_height="1dp"
+                android:background="@color/divider"/>
+
+        <include layout="@layout/reviews_view"/>
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

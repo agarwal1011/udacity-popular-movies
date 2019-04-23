@@ -8,21 +8,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
-import popularmovies.ankit.udacity.com.popularmovies.model.Movie;
+import popularmovies.ankit.udacity.com.popularmovies.database.MovieEntry;
 import popularmovies.ankit.udacity.com.popularmovies.utils.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviePosterAdapter extends ArrayAdapter<Movie> {
+public class MoviePosterAdapter extends ArrayAdapter<MovieEntry> {
 
-    private final List<Movie> mMoviesList = new ArrayList<>();
+    private final List<MovieEntry> mMoviesList = new ArrayList<>();
 
     public MoviePosterAdapter(Context context) {
         super(context, 0);
     }
 
-    public void setData(List<Movie> objects) {
+    public void setData(List<MovieEntry> objects) {
         mMoviesList.clear();
         mMoviesList.addAll(objects);
         notifyDataSetChanged();
@@ -30,7 +30,7 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        Movie movie = getItem(position);
+        MovieEntry movie = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_item, parent, false);
@@ -49,7 +49,7 @@ public class MoviePosterAdapter extends ArrayAdapter<Movie> {
     }
 
     @Override
-    public Movie getItem(int position) {
+    public MovieEntry getItem(int position) {
         return mMoviesList.get(position);
     }
 }
