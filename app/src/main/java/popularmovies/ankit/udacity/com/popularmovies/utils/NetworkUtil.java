@@ -12,9 +12,13 @@ import java.util.Scanner;
 public class NetworkUtil {
 
     //TODO: Set your personal API key here
-    private static final String API_KEY = "";
+    private static final String API_KEY = "237b2345a17055572b7ce33ee93e22e4";
     public static final String POPULAR_MOVIES_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
     public static final String TOP_RATED_MOVIES_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + API_KEY;
+    public static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
+    public static final String FETCH_REVIEWS_ENDPOINT = "reviews";
+    public static final String FETCH_TRAILERS_ENDPOINT = "videos";
+    public static final String QUERY_PARAM_API = "api_key";
     private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
     private static final String IMAGE_QUALITY_AVERAGE = "/w185";
     private static final String IMAGE_QUALITY_HIGH = "/w500";
@@ -29,6 +33,42 @@ public class NetworkUtil {
 
     public static String getMoviesList(String moviesUrl) throws IOException {
         Uri builtUri = Uri.parse(moviesUrl).buildUpon()
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return getResponseFromHttpUrl(url);
+    }
+
+    public static String getReviews(long id) throws IOException {
+        Uri builtUri = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath(String.valueOf(id))
+                .appendPath(FETCH_REVIEWS_ENDPOINT)
+                .appendQueryParameter(QUERY_PARAM_API, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return getResponseFromHttpUrl(url);
+    }
+
+    public static String getTrailers(long id) throws IOException {
+        Uri builtUri = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath(String.valueOf(id))
+                .appendPath(FETCH_TRAILERS_ENDPOINT)
+                .appendQueryParameter(QUERY_PARAM_API, API_KEY)
                 .build();
 
         URL url = null;
