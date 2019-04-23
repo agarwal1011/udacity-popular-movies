@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class NetworkUtil {
 
     //TODO: Set your personal API key here
-    private static final String API_KEY = "237b2345a17055572b7ce33ee93e22e4";
+    private static final String API_KEY = "";
     public static final String POPULAR_MOVIES_URL = "https://api.themoviedb.org/3/movie/popular?api_key=" + API_KEY;
     public static final String TOP_RATED_MOVIES_URL = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + API_KEY;
     public static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
